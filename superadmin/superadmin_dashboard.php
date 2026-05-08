@@ -51,6 +51,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/super_admin.css">
+    <link rel="stylesheet" href="./css/superadmin_navbar.css">
+
     <title>Super Admin Dashboard</title>
 </head>
 
@@ -60,18 +62,7 @@ $conn->close();
     <?php include 'superadmin_sidebar.php'; ?>
 
     <!-- TOP NAVBAR -->
-    <div class="topbar">
-        <div class="left">
-            <button class="hamburger">&#9776;</button>
-        </div>
-        <div class="right">
-            <span class="username">
-                <?= htmlspecialchars($_SESSION['user']['username'] ?? '') ?>
-            </span>
-
-            <img src="avatar.png" class="profile-pic">
-        </div>
-    </div>
+    <?php include 'superadmin_navbar.php'; ?>
 
 
 

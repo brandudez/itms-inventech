@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -16,7 +15,7 @@ $user = $_SESSION['user'];
 
 /* FORCE INTEGER */
 $division_id = isset($user['division_id'])
-    ? (int)$user['division_id']
+    ? (int) $user['division_id']
     : 0;
 
 /* =========================
@@ -107,8 +106,7 @@ $result = $data_stmt->get_result();
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Admin Dashboard</title>
 
@@ -117,10 +115,9 @@ $result = $data_stmt->get_result();
     <link rel="stylesheet" href="assets/add_user_modal.css">
 
     <!-- SWEETALERT -->
-<script src="../assets/js/sweetalert2.min.js"></script>
+    <script src="../assets/js/sweetalert2.min.js"></script>
 
     <style>
-        
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -169,70 +166,71 @@ $result = $data_stmt->get_result();
             padding: 6px 12px;
             font-size: 13px;
         }
+
         /* MAIN CONTAINER */
-.main-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 30px;
-    box-sizing: border-box;
-}
+        .main-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+            box-sizing: border-box;
+        }
 
-/* CONTENT */
-.content {
-    width: 100%;
-    max-width: 1200px;
-}
+        /* CONTENT */
+        .content {
+            width: 100%;
+            max-width: 1200px;
+        }
 
-/* TABLE SECTION */
-.table-section {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
+        /* TABLE SECTION */
+        .table-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
 
-/* CONTENT HEADER */
-.content-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
+        /* CONTENT HEADER */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
 
-/* SEARCH */
-.search-box input {
-    padding: 10px 14px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    min-width: 220px;
-}
+        /* SEARCH */
+        .search-box input {
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            min-width: 220px;
+        }
 
-/* BUTTONS */
-.action-buttons {
-    display: flex;
-    gap: 10px;
-}
+        /* BUTTONS */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
 
-/* BUTTON */
-.btn {
-    border: none;
-    padding: 10px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-}
+        /* BUTTON */
+        .btn {
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-.btn-primary {
-    background: #2563eb;
-    color: white;
-}
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
 
-.btn-danger {
-    background: #dc2626;
-    color: white;
-}
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
     </style>
 
 </head>
@@ -242,48 +240,8 @@ $result = $data_stmt->get_result();
     <!-- ADD USER MODAL -->
     <?php include("./modals/add_user_modal.php"); ?>
 
-    <!-- HEADER -->
-    <header class="header">
-
-        <div class="navbar">
-
-            <div class="nav-left">
-
-                <img src="../assets/img/ITMSLOGO.jpg"
-                    class="logo">
-
-                <span class="title">
-                    ITMS INVENTECH
-                </span>
-
-            </div>
-
-            <!-- PROFILE -->
-            <div class="admin-profile"
-                id="adminProfile">
-
-             <span>
-    <?= htmlspecialchars($user['username']) ?>
-</span>
-
-<div class="profile-avatar">
-    <?= strtoupper(substr($user['username'], 0, 1)) ?>
-</div>
-
-                <div class="dropdown-menu"
-                    id="dropdownMenu">
-
-                    <a href="../auth/logout.php">
-                        Logout
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </header>
+    <!-- NAVbar -->
+    <?php include 'admin_navbar.php'; ?>
 
     <!-- MAIN -->
     <div class="main-container">
@@ -291,9 +249,7 @@ $result = $data_stmt->get_result();
         <!-- CONTENT -->
         <div class="content">
 
-            <form method="POST"
-                action="../admin/deactivate_user.php"
-                id="bulkForm">
+            <form method="POST" action="../admin/deactivate_user.php" id="bulkForm">
 
                 <!-- HEADER -->
                 <div class="content-header">
@@ -305,26 +261,20 @@ $result = $data_stmt->get_result();
                     <!-- SEARCH -->
                     <div class="search-box">
 
-                        <input type="text"
-                            id="searchInput"
-                            placeholder="Search users...">
+                        <input type="text" id="searchInput" placeholder="Search users...">
 
                     </div>
 
                     <!-- BUTTONS -->
                     <div class="action-buttons">
 
-                        <button type="button"
-                            class="btn btn-primary"
-                            onclick="openModal('addUserModal')">
+                        <button type="button" class="btn btn-primary" onclick="openModal('addUserModal')">
 
                             + Add User
 
                         </button>
 
-                        <button type="button"
-                            class="btn btn-danger"
-                            onclick="submitDeactivate()">
+                        <button type="button" class="btn btn-danger" onclick="submitDeactivate()">
 
                             Deactivate Selected
 
@@ -339,8 +289,7 @@ $result = $data_stmt->get_result();
 
                     <div class="table-header">
 
-                        <input type="checkbox"
-                            id="selectAll">
+                        <input type="checkbox" id="selectAll">
 
                         <label>
                             ENCODERS
@@ -372,9 +321,7 @@ $result = $data_stmt->get_result();
 
                                         <td>
 
-                                            <input type="checkbox"
-                                                class="row-checkbox"
-                                                name="user_ids[]"
+                                            <input type="checkbox" class="row-checkbox" name="user_ids[]"
                                                 value="<?= $row['id'] ?>">
 
                                         </td>
@@ -395,8 +342,7 @@ $result = $data_stmt->get_result();
 
                                         <td>
 
-                                            <button type="button"
-                                                class="btn btn-danger btn-sm"
+                                            <button type="button" class="btn btn-danger btn-sm"
                                                 onclick="deactivateUser(<?= $row['id'] ?>)">
 
                                                 Deactivate
@@ -428,8 +374,7 @@ $result = $data_stmt->get_result();
 
                                 <?php for ($i = 1; $i <= $total_pages; $i++): ?>
 
-                                    <a href="?page=<?= $i ?>"
-                                        class="<?= ($i == $page) ? 'active' : '' ?>">
+                                    <a href="?page=<?= $i ?>" class="<?= ($i == $page) ? 'active' : '' ?>">
 
                                         <?= $i ?>
 
@@ -496,32 +441,6 @@ $result = $data_stmt->get_result();
                     .forEach(cb => cb.checked = this.checked);
 
             });
-
-        /* DROPDOWN */
-        const adminProfile =
-            document.getElementById("adminProfile");
-
-        const dropdownMenu =
-            document.getElementById("dropdownMenu");
-
-        adminProfile.addEventListener("click", function (e) {
-
-            e.stopPropagation();
-
-            dropdownMenu.style.display =
-                dropdownMenu.style.display === "block"
-                    ? "none"
-                    : "block";
-
-        });
-
-        document.addEventListener("click", function (e) {
-
-            if (!adminProfile.contains(e.target)) {
-                dropdownMenu.style.display = "none";
-            }
-
-        });
 
         /* MODAL */
         function openModal(id) {
@@ -645,4 +564,3 @@ $result = $data_stmt->get_result();
 </body>
 
 </html>
-
