@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,89 +9,92 @@
   <title>ITMS Inventech</title>
 
   <link rel="stylesheet" href="assets/css/style.css">
-
 </head>
 
 <body>
-  <!-- NAVBAR -->
-  <div class="navbar">
-    <div class="nav-left">
-      <img src="assets/img/ITMSLOGO.jpg" alt="ITMS Logo" class="logo">
-      <span class="title">ITMS INVENTECH</span>
-    </div>
 
-    <div class="nav-right">
-      <button onclick="openModal()">LOGIN</button>
-    </div>
-  </div>
-  <!-- LANDING CONTENT -->
-  <div class="landing">
-    <div class="content-wrapper">
-      <!-- Logo Section -->
-      <div class="logo-section">
-        <img src="assets/img/ITMSLOGO.jpg" alt="ITSD Logo" class="seal-logo">
-      </div>
-
-      <!-- Text Section -->
-      <div class="text-section">
-        <h1 class="main-title">INVENTORY MANAGEMENT SYSTEM</h1>
-      </div>
-    </div>
+<!-- ================= NAVBAR ================= -->
+<div class="navbar">
+  <div class="nav-left">
+    <img src="assets/img/ITMSLOGO.jpg" class="logo">
+    <span class="title">ITMS INVENTECH</span>
   </div>
 
-  <!-- USER LOGIN MODAL -->
-  <div id="userModal" class="modal">
-    <div class="login-card">
-      <span class="close-btn" onclick="closeModal('userModal')">&times;</span>
-      <h2>USER LOGIN</h2>
+  <div class="nav-right">
+    <button onclick="openModal()">LOGIN</button>
+  </div>
+</div>
 
-      <form method="POST" action="auth/login.php">
-        <label>Email</label>
-        <input type="email" name="email" required>
+<!-- ================= LANDING PAGE ================= -->
+<div class="landing">
+  <div class="content-wrapper">
 
-        <label>Password</label>
-        <input type="password" name="password" required>
-
-        <button type="submit" name="user_login">Login</button>
-      </form>
-
-      <p class="or">or</p>
-
-      <button class="admin-btn" onclick="openAdminModal()">
-        Admin Login
-      </button>
-
+    <div class="logo-section">
+      <img src="assets/img/ITMSLOGO.jpg" class="seal-logo">
     </div>
+
+    <div class="text-section">
+      <h1 class="main-title">INVENTORY MANAGEMENT SYSTEM</h1>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= LOGIN MODAL ================= -->
+<div id="loginModal" class="modal">
+
+  <div class="modal-content">
+
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+
+    <h2>LOGIN</h2>
+
+    <!-- ERROR -->
+    <?php if (isset($_GET['error'])): ?>
+      <p style="color:red; text-align:center;">
+        <?php
+          if ($_GET['error'] == "user_not_found") echo "User not found";
+          if ($_GET['error'] == "account_disabled") echo "Account is disabled";
+          if ($_GET['error'] == "wrong_password") echo "Wrong password";
+          if ($_GET['error'] == "invalid_role") echo "Invalid role";
+        ?>
+      </p>
+    <?php endif; ?>
+
+    <form method="POST" action="auth/login.php">
+
+      <label>Email</label>
+      <input type="email" name="email" required>
+
+      <label>Password</label>
+      <input type="password" name="password" required>
+
+      <button type="submit" name="login">Login</button>
+
+    </form>
+
   </div>
 
+</div>
 
-  <!-- ADMIN LOGIN MODAL -->
-  <div id="adminModal" class="modal">
-    <div class="login-card">
-      <span class="close-btn" onclick="closeModal('adminModal')">&times;</span>
-      <h2>ADMIN LOGIN</h2>
+<!-- ================= SCRIPT ================= -->
+<script>
+function openModal() {
+  document.getElementById("loginModal").style.display = "flex";
+}
 
-      <form method="POST" action="auth/login.php">
-        <label>Email</label>
-        <input type="email" name="email" required>
+function closeModal() {
+  document.getElementById("loginModal").style.display = "none";
+}
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+window.onclick = function (event) {
+  let modal = document.getElementById("loginModal");
 
-        <button type="submit" name="admin_login" class="admin-btn">
-          Login as Admin
-        </button>
-      </form>
-
-      <p class="or">or</p>
-
-      <button onclick="backToUser()">← Go to User Login</button>
-
-    </div>
-  </div>
-
-  <script src="assets/js/script.js"></script>
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+</script>
 
 </body>
-
 </html>

@@ -66,7 +66,7 @@ $conn->close();
             <span class="text">Dashboard</span>
         </a>
 
-        <a href="add_users.php">
+        <a href="user_create.php">
             <span class="icon">👤</span>
             <span class="text">Users</span>
         </a>
@@ -88,7 +88,7 @@ $conn->close();
             <button class="hamburger">&#9776;</button>
         </div>
         <div class="right">
-            <span class="username">Super Admin</span>
+            <span class="username">  Super Admin</span>
             <img src="avatar.png" class="profile-pic">
         </div>
     </div>

@@ -238,7 +238,7 @@ while ($row = $rankQuery->fetch_assoc()) {
             <span class="text">Dashboard</span>
         </a>
 
-        <a href="add_users.php" class="active">
+        <a href="user_create.php" class="active">
             <span class="icon">👤</span>
             <span class="text">Users</span>
         </a>

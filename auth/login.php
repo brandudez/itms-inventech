@@ -2,11 +2,27 @@
 session_start();
 include("../config/db.php");
 
-$email = $_POST['email'] ?? '';
-$password = $_POST['password'] ?? '';
+/* =========================
+   SAFETY CHECK (IMPORTANT)
+========================= */
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    header("Location: ../index.php");
+    exit();
+}
 
 /* =========================
-   GET USER DATA
+   INPUT
+========================= */
+$email = trim($_POST['email'] ?? '');
+$password = $_POST['password'] ?? '';
+
+if (empty($email) || empty($password)) {
+    header("Location: ../index.php?error=empty_fields");
+    exit();
+}
+
+/* =========================
+   GET USER
 ========================= */
 $stmt = $conn->prepare("
     SELECT 
@@ -24,28 +40,38 @@ $stmt = $conn->prepare("
     LIMIT 1
 ");
 
+if (!$stmt) {
+    die("SQL Prepare Failed: " . $conn->error);
+}
+
 $stmt->bind_param("s", $email);
-$stmt->execute();
+
+if (!$stmt->execute()) {
+    die("SQL Execute Failed: " . $stmt->error);
+}
+
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
 /* =========================
-   VALIDATIONS
+   VALIDATION
 ========================= */
 
-// user not found
 if (!$user) {
     header("Location: ../index.php?error=user_not_found");
     exit();
 }
 
-// inactive account
-if ($user['is_active'] != 1) {
+if ((int)$user['is_active'] !== 1) {
     header("Location: ../index.php?error=account_disabled");
     exit();
 }
 
-// wrong password
+if (empty($user['password'])) {
+    header("Location: ../index.php?error=invalid_account");
+    exit();
+}
+
 if (!password_verify($password, $user['password'])) {
     header("Location: ../index.php?error=wrong_password");
     exit();
@@ -66,9 +92,14 @@ $_SESSION['user'] = [
 ];
 
 /* =========================
-   REDIRECT
+   REDIRECT BY ROLE
 ========================= */
-switch ($user['role_id']) {
+if (!isset($user['role_id'])) {
+    header("Location: ../index.php?error=invalid_role");
+    exit();
+}
+
+switch ((int)$user['role_id']) {
 
     case 1:
         header("Location: ../superadmin/superadmin_dashboard.php");
