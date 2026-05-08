@@ -1,4 +1,4 @@
-```php id="q4v8tx"
+
 <?php
 session_start();
 
@@ -262,11 +262,13 @@ $result = $data_stmt->get_result();
             <div class="admin-profile"
                 id="adminProfile">
 
-                <span>Admin</span>
+             <span>
+    <?= htmlspecialchars($user['username']) ?>
+</span>
 
-                <div class="profile-avatar">
-                    A
-                </div>
+<div class="profile-avatar">
+    <?= strtoupper(substr($user['username'], 0, 1)) ?>
+</div>
 
                 <div class="dropdown-menu"
                     id="dropdownMenu">

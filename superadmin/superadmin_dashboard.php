@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../config/db.php");
 
 $division = [
@@ -88,7 +89,10 @@ $conn->close();
             <button class="hamburger">&#9776;</button>
         </div>
         <div class="right">
-            <span class="username">  Super Admin</span>
+          <span class="username">
+        <?= htmlspecialchars($_SESSION['user']['username'] ?? '') ?>
+    </span>
+
             <img src="avatar.png" class="profile-pic">
         </div>
     </div>
