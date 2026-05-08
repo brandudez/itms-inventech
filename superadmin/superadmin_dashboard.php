@@ -1,29 +1,35 @@
 <?php
 include("../config/db.php");
 
-/* DEFINE DIVISIONS */
-$divisions = [
-    ["name" => "ARMD"],
-    ["name" => "SMD"],
-    ["name" => "ITSD"],
-    ["name" => "ITPMD"],
-    ["name" => "DMD"],
-    ["name" => "PTD"],
-    ["name" => "PTMD"],
-    ["name" => "ISSD"],
+$division = [
+    ["id" => 1, "name" => "ITSD"],
+    ["id" => 2, "name" => "SMD"],
+    ["id" => 3, "name" => "ISSD"],
+    ["id" => 4, "name" => "ITPMD"],
+    ["id" => 5, "name" => "PTD"],
+    ["id" => 6, "name" => "DMD"],
+    ["id" => 7, "name" => "ARMD"],
+    ["id" => 8, "name" => "PTDLAB"],
+    ["id" => 9, "name" => "CI"],
+    ["id" => 10, "name" => "PCR"],
+    ["id" => 11, "name" => "LS"],
+    ["id" => 12, "name" => "IHSS"],
+    ["id" => 13, "name" => "BFS"],
+    ["id" => 14, "name" => "SAO"],
 ];
 
 /* COUNT USERS PER DIVISION */
-foreach ($divisions as &$div) {
-    $name = $div['name'];
+foreach ($division as &$div) {
+
+    $id = $div['id'];
 
     $stmt = $conn->prepare("
         SELECT COUNT(*) as total
         FROM users
-        WHERE division = ?
+        WHERE division_id = ?
     ");
 
-    $stmt->bind_param("s", $name);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -31,6 +37,10 @@ foreach ($divisions as &$div) {
 
     $div['count'] = $row['total'] ?? 0;
 }
+
+/* IMPORTANT: BREAK THE REFERENCE */
+unset($div);
+
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -56,9 +66,9 @@ $conn->close();
             <span class="text">Dashboard</span>
         </a>
 
-        <a href="modify_admin.php">
+        <a href="add_users.php">
             <span class="icon">👤</span>
-            <span class="text">Modify Admin</span>
+            <span class="text">Users</span>
         </a>
 
         <a href="analytics.php">
@@ -92,11 +102,11 @@ $conn->close();
 
             <div class="grid">
 
-                <?php foreach ($divisions as $div): ?>
+                <?php foreach ($division as $div): ?>
                     <div class="card" onclick="openModal('<?php echo $div['name']; ?>')">
 
                         <div class="card-title">
-                            <?php echo $div['name']; ?>
+                            <?php echo $div['name'];?>
                         </div>
 
                         <div class="card-line">____________</div>

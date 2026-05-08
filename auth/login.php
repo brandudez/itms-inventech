@@ -5,45 +5,87 @@ include("../config/db.php");
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
-$stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+/* =========================
+   GET USER DATA
+========================= */
+$stmt = $conn->prepare("
+    SELECT 
+        id,
+        email,
+        password,
+        role_id,
+        division_id,
+        username,
+        is_active,
+        first_name,
+        last_name
+    FROM users
+    WHERE email = ?
+    LIMIT 1
+");
+
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-if ($user && password_verify($password, $user['password'])) {
+/* =========================
+   VALIDATIONS
+========================= */
 
-    // USER LOGIN
-    if (isset($_POST['user_login'])) {
-
-        if ($user['role'] == 'user') {
-            $_SESSION['user'] = $user;
-            header("Location: ../pages/user_dashboard.php");
-            exit();
-        } else {
-            header("Location: ../index.php?error=not_user");
-            exit();
-        }
-    }
-
-    // ADMIN LOGIN
-    if (isset($_POST['admin_login'])) {
-
-        if ($user['role'] == 'admin') {
-            $_SESSION['user'] = $user;
-            header("Location: ../admin/admin_dashboard.php");
-            exit();
-        } elseif ($user['role'] == 'superadmin') {
-            $_SESSION['user'] = $user;
-            header("Location: ../superadmin/superadmin_dashboard.php");
-            exit();
-        } else {
-            header("Location: ../index.php?error=not_admin");
-            exit();
-        }
-    }
-
-} else {
-    header("Location: ../index.php?error=invalid");
+// user not found
+if (!$user) {
+    header("Location: ../index.php?error=user_not_found");
     exit();
 }
+
+// inactive account
+if ($user['is_active'] != 1) {
+    header("Location: ../index.php?error=account_disabled");
+    exit();
+}
+
+// wrong password
+if (!password_verify($password, $user['password'])) {
+    header("Location: ../index.php?error=wrong_password");
+    exit();
+}
+
+/* =========================
+   SESSION
+========================= */
+session_regenerate_id(true);
+
+$_SESSION['user'] = [
+    'id' => $user['id'],
+    'email' => $user['email'],
+    'role_id' => $user['role_id'],
+    'division_id' => $user['division_id'],
+    'username' => $user['username'],
+    'name' => $user['first_name'] . ' ' . $user['last_name']
+];
+
+/* =========================
+   REDIRECT
+========================= */
+switch ($user['role_id']) {
+
+    case 1:
+        header("Location: ../superadmin/superadmin_dashboard.php");
+        break;
+
+    case 2:
+        header("Location: ../admin/admin_dashboard.php");
+        break;
+
+    case 3:
+        header("Location: ../encoder/encoder_dashboard.php");
+        break;
+
+    default:
+        header("Location: ../index.php?error=invalid_role");
+        break;
+}
+
+exit();
+?>
