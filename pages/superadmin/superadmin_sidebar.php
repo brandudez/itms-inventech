@@ -1,6 +1,6 @@
 <div class="sidebar" id="sidebar">
 
-    <img src="../assets/img/ITMSLOGO.jpg" class="logo">
+    <img src="../../assets/img/ITMSLOGO.jpg" class="logo">
 
     <h2 class="sidebar-title">ITMS InvenTech</h2>
 
@@ -10,21 +10,25 @@
         <span class="text">Dashboard</span>
     </a>
 
-    <a href="add_users.php" class="<?= basename($_SERVER['PHP_SELF']) == 'user_create.php' ? 'active' : '' ?>">
+    <a href="../superadmin/user_create.php"
+        class="<?= basename($_SERVER['PHP_SELF']) == 'user_create.php' ? 'active' : '' ?>">
         <span class="icon">👤</span>
         <span class="text">Add User</span>
     </a>
-    <a href="users_list.php" class="<?= basename($_SERVER['PHP_SELF']) == 'users_list.php' ? 'active' : '' ?>">
+    <a href="../superadmin/users_list.php"
+        class="<?= basename($_SERVER['PHP_SELF']) == 'users_list.php' ? 'active' : '' ?>">
         <span class="icon">📋</span>
         <span class="text">Users list</span>
     </a>
 
-    <a href="analytics.php" class="<?= basename($_SERVER['PHP_SELF']) == 'analytics.php' ? 'active' : '' ?>">
+    <a href="../superadmin/analytics.php"
+        class="<?= basename($_SERVER['PHP_SELF']) == 'analytics.php' ? 'active' : '' ?>">
         <span class="icon">📊</span>
         <span class="text">Analytics</span>
     </a>
 
-    <a href="add_report.php" class="<?= basename($_SERVER['PHP_SELF']) == 'add_report.php' ? 'active' : '' ?>">
+    <a href="../superadmin/add_report.php"
+        class="<?= basename($_SERVER['PHP_SELF']) == 'add_report.php' ? 'active' : '' ?>">
         <span class="icon">📝</span>
         <span class="text">Add Reports</span>
     </a>

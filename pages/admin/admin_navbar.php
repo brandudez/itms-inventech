@@ -13,7 +13,7 @@ $user = $_SESSION['user'];
 
         <div class="nav-left">
 
-            <img src="../assets/img/ITMSLOGO.jpg" class="logo">
+            <img src="../../assets/img/ITMSLOGO.jpg" class="logo">
 
             <span class="title">
                 ITMS INVENTECH
@@ -33,8 +33,7 @@ $user = $_SESSION['user'];
             </div>
 
             <div class="dropdown-menu" id="dropdownMenu">
-
-                <a href="../auth/logout.php">
+                <a href="../../auth/logout.php">
                     Logout
                 </a>
 

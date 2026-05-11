@@ -3,7 +3,18 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+/* CHECK IF USER SESSION EXISTS */
+if (!isset($_SESSION['user'])) {
+
+    header("Location: ../../index.php");
+    exit();
+
+}
+
 $user = $_SESSION['user'];
+
+/* SAFE DEFAULT */
+$username = $user['username'] ?? 'Super Admin';
 ?>
 
 <!-- SUPER ADMIN NAVBAR -->
@@ -14,25 +25,24 @@ $user = $_SESSION['user'];
         <!-- LEFT -->
         <div class="nav-left">
             <span class="toggle-btn" id="toggleBtn">☰</span>
-
         </div>
 
         <!-- RIGHT -->
         <div class="admin-profile" id="adminProfile">
 
             <span class="username">
-                <?= htmlspecialchars($user['username']) ?>
+                <?= htmlspecialchars($username) ?>
             </span>
 
             <!-- AVATAR -->
             <div class="profile-avatar">
-                <?= strtoupper(substr($user['username'], 0, 1)) ?>
+                <?= strtoupper(substr($username, 0, 1)) ?>
             </div>
 
             <!-- DROPDOWN -->
             <div class="dropdown-menu" id="dropdownMenu">
 
-                <a href="../auth/logout.php">
+                <a href="../../auth/logout.php">
                     Logout
                 </a>
 
