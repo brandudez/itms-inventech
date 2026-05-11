@@ -62,7 +62,11 @@ if (!$user) {
     exit();
 }
 
+<<<<<<< HEAD
 if ((int) $user['is_active'] !== 1) {
+=======
+if ((int)$user['is_active'] !== 1) {
+>>>>>>> 1b581cc5852b433fbda3e5c8f228e735183230e8
     header("Location: ../index.php?error=account_disabled");
     exit();
 }
@@ -99,6 +103,7 @@ if (!isset($user['role_id'])) {
     exit();
 }
 
+<<<<<<< HEAD
 switch ((int) $user['role_id']) {
 
     case 1:
@@ -111,6 +116,20 @@ switch ((int) $user['role_id']) {
 
     case 3:
         header("Location: ../pages/encoder/encoder_dashboard.php");
+=======
+switch ((int)$user['role_id']) {
+
+    case 1:
+        header("Location: ../superadmin/superadmin_dashboard.php");
+        break;
+
+    case 2:
+        header("Location: ../admin/admin_dashboard.php");
+        break;
+
+    case 3:
+        header("Location: ../encoder/encoder_dashboard.php");
+>>>>>>> 1b581cc5852b433fbda3e5c8f228e735183230e8
         break;
 
     default:
